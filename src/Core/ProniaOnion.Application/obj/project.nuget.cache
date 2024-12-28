@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "vfEHtkcMU6M=",
+  "dgSpecHash": "LR+physSO2w=",
   "success": true,
   "projectFilePath": "C:\\Users\\User\\OneDrive\\Desktop\\Documents\\API\\ProniaOnion\\src\\Core\\ProniaOnion.Application\\ProniaOnion.Application.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.11\\microsoft.entityframeworkcore.abstractions.8.0.11.nupkg.sha512"
+  ],
   "logs": []
 }
