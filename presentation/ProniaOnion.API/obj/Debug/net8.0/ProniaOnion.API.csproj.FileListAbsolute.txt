@@ -148,3 +148,4 @@ C:\Users\User\OneDrive\Desktop\Documents\API\ProniaOnion\presentation\ProniaOnio
 C:\Users\User\OneDrive\Desktop\Documents\API\ProniaOnion\presentation\ProniaOnion.API\obj\Debug\net8.0\ProniaOnion.API.pdb
 C:\Users\User\OneDrive\Desktop\Documents\API\ProniaOnion\presentation\ProniaOnion.API\obj\Debug\net8.0\ProniaOnion.API.genruntimeconfig.cache
 C:\Users\User\OneDrive\Desktop\Documents\API\ProniaOnion\presentation\ProniaOnion.API\obj\Debug\net8.0\ref\ProniaOnion.API.dll
+C:\Users\User\OneDrive\Desktop\Documents\API\ProniaOnion\presentation\ProniaOnion.API\bin\Debug\net8.0\AutoMapper.dll
