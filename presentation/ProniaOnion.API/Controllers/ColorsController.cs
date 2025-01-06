@@ -53,7 +53,7 @@ namespace ProniaOnion.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromForm] UpdateColorDto colorDto)
+        public async Task<IActionResult> Update(int id,UpdateColorDto colorDto)
         {
             if (id < 1) return BadRequest();
 

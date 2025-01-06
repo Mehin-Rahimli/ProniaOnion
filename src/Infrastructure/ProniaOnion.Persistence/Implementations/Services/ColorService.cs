@@ -69,7 +69,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
             if (color == null) throw new Exception("Not found");
             if (await _colorRepository.AnyAsync(c => c.Name == colorDto.Name && c.Id != id)) throw new Exception("Already exists");
 
-            color = _mapper.Map<Color>(colorDto);
+            color = _mapper.Map(colorDto,color);
           //  color.Id = id;
 
             color.Name = colorDto.Name;
