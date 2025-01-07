@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProniaOnion.Application.Validators
 {
-    internal class CreateCategoryDtoValidator:AbstractValidator<CreateCategoryDto>
+    public class CreateCategoryDtoValidator:AbstractValidator<CreateCategoryDto>
     {
         private readonly ICategoryRepository _repository;
 
@@ -21,15 +21,13 @@ namespace ProniaOnion.Application.Validators
                 .NotEmpty().WithMessage("Data required")
                 .MaximumLength(100).WithMessage("Characters should be less than 100")
                 .MinimumLength(3)
-                .Matches(@"[A-Zaz-z\s0-9]*$");
-                /*.MustAsync(CheckNameExsistence)*/
+                .Matches(@"[A-Zaz-z\s0-9]*$")
+                .MustAsync(CheckNameExsistence).WithMessage("Category already exists");
         }
 
-        //public async Task<bool> CheckNameExsistence(string name,CancellationToken token) 
-        //{
-
-        //    return !await _repository.AnyAsync(c => c.Name == name);
-        //}
-
+        public async Task<bool> CheckNameExsistence(string name, CancellationToken token)
+        {
+            return !await _repository.AnyAsync(c => c.Name == name);
+        }
     }
 }

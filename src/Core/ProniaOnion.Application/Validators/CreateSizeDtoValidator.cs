@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using ProniaOnion.Application.Abstractions.Repositories;
 using ProniaOnion.Application.Abstractions.Repositories.Generic;
 using ProniaOnion.Application.DTOs.Sizes;
 using ProniaOnion.Application.DTOs.Tags;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ProniaOnion.Application.Validators
 {
-    internal class CreateSizeDtoValidator:AbstractValidator<CreateSizeDto>
+    public class CreateSizeDtoValidator:AbstractValidator<CreateSizeDto>
     {
         private readonly ISizeRepository _sizeRepository;
 
@@ -22,7 +23,12 @@ namespace ProniaOnion.Application.Validators
                 .NotEmpty()
                 .MaximumLength(100)
                 .MinimumLength(2)
-                .Matches(@"[A-Za-z\s0-9]*$");
+                .Matches(@"[A-Za-z\s0-9]*$").MustAsync(CheckNameExsistence);
+        }
+
+        public async Task<bool> CheckNameExsistence(string name, CancellationToken token)
+        {
+            return !await _sizeRepository.AnyAsync(c => c.Name == name);
         }
     }
 }

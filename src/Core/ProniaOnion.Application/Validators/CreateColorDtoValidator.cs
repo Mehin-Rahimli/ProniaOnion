@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProniaOnion.Application.Validators
 {
-    internal class CreateColorDtoValidator:AbstractValidator<CreateColorDto>
+    public class CreateColorDtoValidator:AbstractValidator<CreateColorDto>
     {
         private readonly IColorRepository _repository;
 
@@ -22,8 +22,12 @@ namespace ProniaOnion.Application.Validators
                 .MaximumLength(100)
                 .MinimumLength(2)
                 .Matches(@"[A-Za-z\s0-9]*$")
-                ;
-            
+               .MustAsync(CheckNameExsistence);
+        }
+
+        public async Task<bool> CheckNameExsistence(string name, CancellationToken token)
+        {
+            return !await _repository.AnyAsync(c => c.Name == name);
         }
     }
 }

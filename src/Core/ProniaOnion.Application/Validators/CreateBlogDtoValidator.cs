@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProniaOnion.Application.Validators
 {
-    internal class CreateBlogDtoValidator:AbstractValidator<CreateBlogDto>
+    public class CreateBlogDtoValidator:AbstractValidator<CreateBlogDto>
     {
         private readonly IBlogRepository _repository;
 
@@ -22,6 +22,13 @@ namespace ProniaOnion.Application.Validators
                .MaximumLength(100).WithMessage("Characters should be less than 100")
                .MinimumLength(3)
                .Matches(@"[A-Zaz-z\s0-9]*$");
+               //.MustAsync(CheckNameExsistence);
         }
+
+        //public async Task<bool> CheckNameExsistence(string name, CancellationToken token)
+        //{
+        //    return !await _repository.AnyAsync(c => c.Name == name);
+        //}
+   
     }
 }

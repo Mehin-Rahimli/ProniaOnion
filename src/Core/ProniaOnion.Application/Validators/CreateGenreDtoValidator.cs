@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProniaOnion.Application.Validators
 {
-    internal class CreateGenreDtoValidator:AbstractValidator<CreateGenreDto>
+    public class CreateGenreDtoValidator:AbstractValidator<CreateGenreDto>
     {
         private readonly IGenreRepository _repository;
 
@@ -21,8 +21,12 @@ namespace ProniaOnion.Application.Validators
                .MaximumLength(100)
                .MinimumLength(2)
                .Matches(@"[A-Za-z\s0-9]*$")
-               ;
-            
+                .MustAsync(CheckNameExsistence);
+        }
+
+        public async Task<bool> CheckNameExsistence(string name, CancellationToken token)
+        {
+            return !await _repository.AnyAsync(c => c.Name == name);
         }
     }
 }
