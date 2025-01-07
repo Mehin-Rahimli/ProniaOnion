@@ -28,9 +28,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
            
             var blog = _mapper.Map<Blog>(blogDto);
 
-            blog.CreatedAt = DateTime.Now;
-            blog.ModifiedAt = DateTime.Now;
-
+            
             await _repository.AddAsync(blog);
             await _repository.SaveChangesAsync();
         }
@@ -75,8 +73,15 @@ namespace ProniaOnion.Persistence.Implementations.Services
             blog.GenreId = blogDto.GenreId;
 
 
-            blog.ModifiedAt = DateTime.Now;
+            _repository.Update(blog);
+            await _repository.SaveChangesAsync();
+        }
 
+        public async Task SoftDelete(int id)
+        {
+            Blog blog = await _repository.GetByIdAsync(id);
+            if (blog == null) throw new Exception("Not found");
+            blog.IsDeleted = true;
             _repository.Update(blog);
             await _repository.SaveChangesAsync();
         }

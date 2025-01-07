@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProniaOnion.Application.Abstractions.Services;
 using ProniaOnion.Application.DTOs.Categories;
@@ -11,11 +12,13 @@ namespace ProniaOnion.API.Controllers
     public class ColorsController : ControllerBase
     {
         private readonly IColorService _service;
+        private readonly IValidator<CreateColorDto> _validator;
 
-        public ColorsController(IColorService service)
+        public ColorsController(IColorService service, IValidator<CreateColorDto> validator)
         {
 
             _service = service;
+            _validator = validator;
         }
 
         [HttpGet]

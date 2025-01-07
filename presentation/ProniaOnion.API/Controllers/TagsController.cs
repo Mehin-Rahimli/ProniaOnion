@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProniaOnion.Application.Abstractions.Services;
+using ProniaOnion.Application.DTOs.Colors;
 using ProniaOnion.Application.DTOs.Tags;
 
 namespace ProniaOnion.API.Controllers
@@ -10,10 +12,12 @@ namespace ProniaOnion.API.Controllers
     public class TagsController : ControllerBase
     {
         private readonly ITagService _service;
+        private readonly IValidator<CreateTagDto> _validator;
 
-        public TagsController(ITagService service)
+        public TagsController(ITagService service, IValidator<CreateTagDto> validator)
         {
             _service = service;
+            _validator = validator;
         }
 
         [HttpGet]

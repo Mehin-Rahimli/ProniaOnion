@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProniaOnion.Application.Abstractions.Services;
 using ProniaOnion.Application.DTOs.Blogs;
@@ -11,10 +12,13 @@ namespace ProniaOnion.API.Controllers
     public class BlogsController : ControllerBase
     {
         private readonly IBlogService _service;
+        private readonly IValidator<CreateBlogDto> _validator;
+     
 
-        public BlogsController(IBlogService service)
+        public BlogsController(IBlogService service, IValidator<CreateBlogDto> validator)
         {
             _service = service;
+            _validator = validator;
         }
 
         [HttpGet]

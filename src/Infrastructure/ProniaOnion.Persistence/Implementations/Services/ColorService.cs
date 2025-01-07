@@ -6,6 +6,7 @@ using ProniaOnion.Application.DTOs.Categories;
 using ProniaOnion.Application.DTOs.Colors;
 using ProniaOnion.Domain.Entities;
 using ProniaOnion.Persistence.Implementations.Repostories;
+using ProniaOnion.Persistence.Implementations.Repostories.Generic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,9 +32,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
             var color = _mapper.Map<Color>(colorDto);
 
-            color.CreatedAt = DateTime.Now;
-            color.ModifiedAt = DateTime.Now;
-
+          
             await _colorRepository.AddAsync(color);
             await _colorRepository.SaveChangesAsync();
         }
@@ -73,8 +72,16 @@ namespace ProniaOnion.Persistence.Implementations.Services
           //  color.Id = id;
 
             color.Name = colorDto.Name;
-            color.ModifiedAt = DateTime.Now;
+           
+            _colorRepository.Update(color);
+            await _colorRepository.SaveChangesAsync();
+        }
 
+        public async Task SoftDelete(int id)
+        {
+            Color color = await _colorRepository.GetByIdAsync(id);
+            if (color == null) throw new Exception("Not found");
+            color.IsDeleted = true;
             _colorRepository.Update(color);
             await _colorRepository.SaveChangesAsync();
         }

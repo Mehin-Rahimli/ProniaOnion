@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProniaOnion.Application.Abstractions.Services;
 using ProniaOnion.Application.DTOs.Authors;
@@ -11,11 +12,13 @@ namespace ProniaOnion.API.Controllers
     public class AuthorsController : ControllerBase
     {
         private readonly IAuthorService _service;
+        private readonly IValidator<CreateAuthorDto> _validator;
 
-        public AuthorsController(IAuthorService service)
+        public AuthorsController(IAuthorService service, IValidator<CreateAuthorDto> validator)
         {
 
             _service = service;
+            _validator = validator;
         }
 
         [HttpGet]

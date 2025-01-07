@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProniaOnion.Application.Abstractions.Services;
+using ProniaOnion.Application.DTOs.Colors;
 using ProniaOnion.Application.DTOs.Genres;
 
 namespace ProniaOnion.API.Controllers
@@ -10,11 +12,13 @@ namespace ProniaOnion.API.Controllers
     public class GenresController : ControllerBase
     {
         private readonly IGenreService _service;
+        private readonly IValidator<CreateGenreDto> _validator;
 
-        public GenresController(IGenreService service)
+        public GenresController(IGenreService service, IValidator<CreateGenreDto> validator)
         {
 
             _service = service;
+            _validator = validator;
         }
 
         [HttpGet]

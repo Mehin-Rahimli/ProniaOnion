@@ -29,9 +29,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
             var genre = _mapper.Map<Genre>(genreDto);
 
-            genre.CreatedAt = DateTime.Now;
-            genre.ModifiedAt = DateTime.Now;
-
+           
             await _repository.AddAsync(genre);
             await _repository.SaveChangesAsync();
         }
@@ -74,10 +72,19 @@ namespace ProniaOnion.Persistence.Implementations.Services
             genre = _mapper.Map(genreDto, genre);
 
             genre.Name = genreDto.Name;
-            genre.ModifiedAt = DateTime.Now;
-
+          
             _repository.Update(genre);
             await _repository.SaveChangesAsync();
         }
+
+        public async Task SoftDelete(int id)
+        {
+            Genre genre = await _repository.GetByIdAsync(id);
+            if (genre == null) throw new Exception("Not found");
+            genre.IsDeleted = true;
+            _repository.Update(genre);
+            await _repository.SaveChangesAsync();
+        }
+
     }
 }

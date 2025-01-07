@@ -32,6 +32,7 @@ namespace ProniaOnion.Persistence.Implementations.Repostories.Generic
             int take = 0,
             bool isDescending = false,
             bool isTracking = false,
+            bool ignoreQuery = false,
             params string[]? includes
             )
         {
@@ -50,6 +51,9 @@ namespace ProniaOnion.Persistence.Implementations.Repostories.Generic
 
             query = query.Skip(skip);
             if (take != 0) query = query.Take(take);
+
+            if(ignoreQuery)
+            query=query.IgnoreQueryFilters();
 
             return isTracking ? query : query.AsNoTracking();
 

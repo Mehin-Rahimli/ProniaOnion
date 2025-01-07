@@ -26,8 +26,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
         {
             if (await _sizeRepository.AnyAsync(s => s.Name == sizeDto.Name)) throw new Exception("Already exists");
             var size = _mapper.Map<Size>(sizeDto);
-            size.CreatedAt= DateTime.Now;
-            size.ModifiedAt= DateTime.Now;
+           
             await _sizeRepository.AddAsync(size);
             await _sizeRepository.SaveChangesAsync();
         }
@@ -65,9 +64,18 @@ namespace ProniaOnion.Persistence.Implementations.Services
             if (await _sizeRepository.AnyAsync(s => s.Name == sizeDto.Name && s.Id != id)) throw new Exception("Already exists");
             size=_mapper.Map(sizeDto,size);
             size.Name = sizeDto.Name;
-            size.ModifiedAt=DateTime.Now;
+            
              _sizeRepository.Update(size);
             await _sizeRepository.SaveChangesAsync();
         }
+        public async Task SoftDelete(int id)
+        {
+            Size size = await _sizeRepository.GetByIdAsync(id);
+            if (size == null) throw new Exception("Not found");
+            size.IsDeleted = true;
+            _sizeRepository.Update(size);
+            await _sizeRepository.SaveChangesAsync();
+        }
+
     }
 }

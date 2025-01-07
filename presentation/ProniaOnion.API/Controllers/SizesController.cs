@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProniaOnion.Application.Abstractions.Services;
+using ProniaOnion.Application.DTOs.Colors;
 using ProniaOnion.Application.DTOs.Sizes;
 using ProniaOnion.Persistence.Contexts;
 
@@ -11,10 +13,12 @@ namespace ProniaOnion.API.Controllers
     public class SizesController : ControllerBase
     {
         private readonly ISizeService _sizeService;
+        private readonly IValidator<CreateSizeDto> _validator;
 
-        public SizesController(ISizeService sizeService)
+        public SizesController(ISizeService sizeService, IValidator<CreateSizeDto> validator)
         {
             _sizeService = sizeService;
+            _validator = validator;
         }
 
         [HttpGet]

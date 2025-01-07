@@ -26,8 +26,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
         {
             if (await _tagRepository.AnyAsync(t => t.Name == tagDto.Name)) throw new Exception("Already exists");
             var tag=_mapper.Map<Tag>(tagDto);
-            tag.ModifiedAt = DateTime.Now;
-            tag.CreatedAt=DateTime.Now;
+          
             await _tagRepository.AddAsync(tag);
             await _tagRepository.SaveChangesAsync();
         }
@@ -68,10 +67,19 @@ namespace ProniaOnion.Persistence.Implementations.Services
             tag=_mapper.Map(tagDto,tag);
 
             tag.Name= tagDto.Name;
-            tag.ModifiedAt = DateTime.Now;
+           
              _tagRepository.Update(tag);
             await _tagRepository.SaveChangesAsync();
 
+        }
+
+        public async Task SoftDelete(int id)
+        {
+            Tag tag = await _tagRepository.GetByIdAsync(id);
+            if (tag == null) throw new Exception("Not found");
+            tag.IsDeleted = true;
+            _tagRepository.Update(tag);
+            await _tagRepository.SaveChangesAsync();
         }
     }
 }

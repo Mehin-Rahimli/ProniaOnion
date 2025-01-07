@@ -28,9 +28,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
 
             var author = _mapper.Map<Author>(authorDto);
 
-            author.CreatedAt = DateTime.Now;
-            author.ModifiedAt = DateTime.Now;
-
+           
             await _repository.AddAsync(author);
             await _repository.SaveChangesAsync();
         }
@@ -75,8 +73,17 @@ namespace ProniaOnion.Persistence.Implementations.Services
             author.Name = authorDto.Name;
             author.Surname = authorDto.Surname;
 
-            author.ModifiedAt = DateTime.Now;
+           
 
+            _repository.Update(author);
+            await _repository.SaveChangesAsync();
+        }
+
+        public async Task SoftDelete(int id)
+        {
+            Author author = await _repository.GetByIdAsync(id);
+            if (author == null) throw new Exception("Not found");
+            author.IsDeleted = true;
             _repository.Update(author);
             await _repository.SaveChangesAsync();
         }
