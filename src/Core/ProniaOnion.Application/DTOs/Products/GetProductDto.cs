@@ -1,5 +1,7 @@
 ﻿using ProniaOnion.Application.DTOs.Categories;
 using ProniaOnion.Application.DTOs.Colors;
+using ProniaOnion.Application.DTOs.Sizes;
+using ProniaOnion.Application.DTOs.Tags;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +17,11 @@ namespace ProniaOnion.Application.DTOs.Products
         string SKU,
         string Description,
         CategoryItemDto Category,
-        IEnumerable<ColorItemDto> Colors
+        IEnumerable<ColorItemDto> Colors,
+        IEnumerable<TagItemDto> Tags,
+        IEnumerable<SizeItemDto>Sizes 
+        
+
 
         );
     

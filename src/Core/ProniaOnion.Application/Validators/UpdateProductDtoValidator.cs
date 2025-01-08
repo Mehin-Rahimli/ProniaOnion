@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Hosting;
 using ProniaOnion.Application.DTOs.Products;
 using System;
 using System.Collections.Generic;
@@ -8,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace ProniaOnion.Application.Validators
 {
-    public class CreateProductDtoValidator:AbstractValidator<CreateProductDto>
+    public class UpdateProductDtoValidator:AbstractValidator<UpdateProductDto>
     {
         public const int NAME_MAX_LENGTH = 100;
-        public CreateProductDtoValidator()
+        public UpdateProductDtoValidator()
         {
-            RuleFor(p=>p.Name)
+            RuleFor(p => p.Name)
                 .NotEmpty()
                     .WithMessage("Name is required")
                 .MaximumLength(NAME_MAX_LENGTH)
@@ -43,31 +44,24 @@ namespace ProniaOnion.Application.Validators
                 .Must(categiryid => categiryid > 0);
 
 
-            RuleForEach(p=>p.ColorIds)
-                .NotEmpty().Must(colorid =>colorid > 0);
-
-            //RuleFor(p=>p.ColorIds)
-            //    .NotEmpty()
-            //    .Must(ci=>ci.Count>0);
-
-
+            RuleForEach(p => p.ColorIds)
+                .NotEmpty()
+                .Must(colorid => colorid > 0)
+                    .WithMessage("Color id is wrong");
 
             RuleForEach(p => p.TagIds)
-              .NotEmpty().Must(tagid => tagid > 0);
+              .NotEmpty()
+              .Must(tagid => tagid > 0)
+                 .WithMessage("Tag id is wrong");
 
-            //RuleFor(p => p.TagIds)
-            //    .NotEmpty()
-            //    .Must(ci => ci.Count > 0);
-
-
+           
 
             RuleForEach(p => p.SizeIds)
-              .NotEmpty().Must(sizeid => sizeid > 0);
+              .NotEmpty()
+              .Must(sizeid => sizeid > 0)
+                 .WithMessage("Size id is wrong");
 
-            //RuleFor(p => p.SizeIds)
-            //    .NotEmpty()
-            //    .Must(ci => ci.Count > 0);
-
+          
         }
-    } 
+    }
 }

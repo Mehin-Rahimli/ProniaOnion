@@ -21,13 +21,14 @@ namespace ProniaOnion.Application.Validators
                 .NotEmpty()
                 .MaximumLength(100)
                 .MinimumLength(2)
-                .Matches(@"[A-Za-z\s0-9]*$")
-               .MustAsync(CheckNameExsistence);
+                .Matches(@"[A-Za-z\s0-9]*$");
         }
+        //       .MustAsync(CheckNameExsistence);
+        //}
 
-        public async Task<bool> CheckNameExsistence(string name, CancellationToken token)
-        {
-            return !await _repository.AnyAsync(c => c.Name == name);
-        }
+        //public async Task<bool> CheckNameExsistence(string name, CancellationToken token)
+        //{
+        //    return !await _repository.AnyAsync(c => c.Name == name);
+        //}
     }
 }
