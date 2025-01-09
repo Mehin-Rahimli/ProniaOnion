@@ -87,7 +87,7 @@ namespace ProniaOnion.Persistence.Implementations.Services
             if (colorEntities.Count() != createItems.Distinct().Count())
                 throw new Exception("One or more color id is wrong");
 
-
+            
             ICollection<int> createItems2 = productDto.TagIds.Where(cId => !product.ProductTags.Any(pc => pc.TagId == cId)).ToList();
             var tagEntities = await _productRepository.GetManyToManyEntities<Tag>(createItems2);
             if (tagEntities.Count() != createItems.Distinct().Count())
